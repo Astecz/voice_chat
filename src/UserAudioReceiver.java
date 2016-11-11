@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 
 public class UserAudioReceiver extends Thread{
-    byte buffer[] = new byte[512];
+   // byte buffer[] = new byte[512];
 
     int id;
     InetAddress IP;
@@ -22,6 +22,7 @@ public class UserAudioReceiver extends Thread{
     int numUsers;
     ServerRoom sala;
     int cont;
+    
     public UserAudioReceiver (int id, InetAddress IP,int port, ServerRoom sala){
         this.id = id;
         this.IP = IP;
@@ -31,7 +32,7 @@ public class UserAudioReceiver extends Thread{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        this.pIn = new DatagramPacket(buffer, buffer.length);
+        this.pIn = new DatagramPacket(BufferCenter.buffer[id],BufferCenter.buffer[0].length);
         isEmpty = true;
         this.sala = sala;
         cont = 0;
@@ -41,31 +42,32 @@ public class UserAudioReceiver extends Thread{
         numUsers = num;
     } 
     
-    private synchronized void read() throws IOException{
-        sIn.receive(pIn); //encher o buffer
-    }
+//    private synchronized void read() throws IOException{
+//        sIn.receive(pIn); //encher o buffer
+//    }
     
-    public synchronized byte[] getBuffer(){
-        cont++;
-        setEmpty();
-        return buffer;
-    }
-    
-    public synchronized void setEmpty(){
-        if(cont == sala.getNum()){
-            isEmpty = true;
-            cont = 0;
-        }else{
-            isEmpty = false;
-        }
-        
-    }
+//    public synchronized byte[] getBuffer(){
+//        cont++;
+//        setEmpty();
+//        return buffer;
+//    }
+//    
+//    public synchronized void setEmpty(){
+//        if(cont == sala.getNum()){
+//            isEmpty = true;
+//            cont = 0;
+//        }else{
+//            isEmpty = false;
+//        }
+//        
+//    }
 
     public void run(){
         while(true){
-            if(isEmpty){
+            if(BufferCenter.isEmptyFlags[id]){
                 try {
-                    read();
+                	sIn.receive(pIn); //encher o buffer
+                	BufferCenter.isEmptyFlags[id] = false;
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
