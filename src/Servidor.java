@@ -61,7 +61,7 @@ public class Servidor extends Thread{
 						}
 					}
 					if(x == null){
-						user = new ServerUser(a, Nick, s.getInetAddress(), port+1);
+						user = new ServerUser(a, Nick, s.getInetAddress(), port+1,1);
 						x = new ServerRoom(user, port, sala);
 						salas.add(x);
 						dataOUT.writeUTF(Integer.toString(port+1));
@@ -69,7 +69,8 @@ public class Servidor extends Thread{
 						
 						
 					}else{
-						user = new ServerUser(a, Nick, s.getInetAddress(), x.getPorta() + (x.getNum()*3)+1);
+						user = new ServerUser(a, Nick, s.getInetAddress(), x.getPorta() + (x.getNum()*3)+1
+                                                ,x.getNum()+1);
 						dataOUT.writeUTF(Integer.toString(x.getPorta() + (x.getNum()*3)+1));
 						x.insereUser(user);
 					}
