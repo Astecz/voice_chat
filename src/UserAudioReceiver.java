@@ -19,7 +19,6 @@ public class UserAudioReceiver extends Thread{
     int port;
     DatagramSocket sIn;
     DatagramPacket pIn;
-    boolean isEmpty;
     int numUsers;
     ServerRoom sala;
     int cont;
@@ -35,8 +34,8 @@ public class UserAudioReceiver extends Thread{
             ex.printStackTrace();
         }
         bufferCenter = sala.getBufferCenter();
+        bufferCenter.setIsEmptyFlag(id, true);
         this.pIn = new DatagramPacket(bufferCenter.buffer[id],bufferCenter.buffer[0].length);
-        isEmpty = true;
         this.sala = sala;
         cont = 0;
         
@@ -68,14 +67,11 @@ public class UserAudioReceiver extends Thread{
 
     public void run(){
     	try {
-			sIn.receive(pIn); //encher o buffer
-			bufferCenter.setIsEmptyFlag(id,false);
-			
         while(true){
-            if(bufferCenter.isEmptyFlags[id]){
+            if(bufferCenter.getIsEmptyFlag(id)){
                 	sIn.receive(pIn); //encher o buffer
                 	bufferCenter.setIsEmptyFlag(id,false);
-                	System.out.println("---------->Leu no "+id);
+                	//System.out.println("---------->Leu no "+id);
                 
             }
         }
