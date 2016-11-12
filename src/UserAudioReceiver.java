@@ -67,16 +67,20 @@ public class UserAudioReceiver extends Thread{
 //    }
 
     public void run(){
+    	try {
+			sIn.receive(pIn); //encher o buffer
+			bufferCenter.setIsEmptyFlag(id,false);
+			
         while(true){
             if(bufferCenter.isEmptyFlags[id]){
-                try {
                 	sIn.receive(pIn); //encher o buffer
-                	bufferCenter.isEmptyFlags[id] = false;
+                	bufferCenter.setIsEmptyFlag(id,false);
                 	System.out.println("---------->Leu no "+id);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                
             }
+        }
+    	} catch (IOException ex) {
+            ex.printStackTrace();
         }
     }
     

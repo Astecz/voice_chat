@@ -19,9 +19,6 @@ public class ServerRoom{
 		this.nome = nome;
 		this.port = port;
 		buff = b;
-		for(int i = 0; i < buff.isEmptyFlags.length; i++){
-			buff.isEmptyFlags[i] =  true;
-		}
 		insereUser(user);
 		
 	}

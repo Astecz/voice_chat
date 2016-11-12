@@ -32,27 +32,26 @@ public class Mixer extends Thread{
 			while(true){
 	    		
 	    		for(int i = 0; i < buffer.length; i++){ //Enche o buffer
-	    			System.out.println("Mixer "+idUser+" getbuffer em "+i);
-	    			if(i == bufferCenter.getNumUsers()){
-	    				System.out.println("Número de usuários: "+ bufferCenter.getNumUsers());
+
+	    			if(i >= bufferCenter.getNumUsers()){
+	    				//System.out.println("Número de usuários: "+ bufferCenter.getNumUsers());
 	    				break;
 	    			}
+	    			
 	    			if(i != idUser){
+		    			//System.out.println("Mixer "+idUser+" getbuffer em "+i);
 	    				byte temp[] = bufferCenter.getBuffer(i);
 	    				if(temp == null){
 	    					i--;
 	    					continue;
 	    				}
 	    				buffer[i] = temp.clone();
-	    				System.out.println("Buffer "+buffer[i][1]);
+	    				//System.out.println("Buffer "+buffer[i][1]);
 	    			}
-//	    			if(buffer[i] == null){	//Caso não consiga ler o buffer
-//	    				i--;
-//	    			}
 
 	    		}
 	    		
-	    		System.out.println("----------------->Passou");
+	    		//System.out.println("----------------->Passou");
 	    		
 	    		for(int i = 0; i < buffer[0].length; i++){
 	    			bufferOut[i] = (byte) (buffer[0][i] + buffer[1][i] + buffer[2][i] 
