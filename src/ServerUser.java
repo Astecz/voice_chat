@@ -20,7 +20,8 @@ public class ServerUser extends Thread{
 	ServerRoom sala;
 	int TAM = 1024;
 	IServidor server;
-        int ID;
+    int ID;
+    BufferCenter buff;
 		
 	// comunicação
 	byte []buffer = new byte[TAM];
@@ -33,12 +34,21 @@ public class ServerUser extends Thread{
 		
 	}
         
-        public ServerUser(IServidor s,String nickname, InetAddress IP, int port, int ID){
+    public ServerUser(IServidor s,String nickname, InetAddress IP, int port, int ID, BufferCenter buff){
 		this.server = s;
 		this.nickname = nickname;
 		this.port = port;
 		this.IP = IP;
-                this.ID = ID;
+	    this.ID = ID;
+	    this.buff = buff;
+	}
+    
+    public ServerUser(IServidor s,String nickname, InetAddress IP, int port, int ID){
+		this.server = s;
+		this.nickname = nickname;
+		this.port = port;
+		this.IP = IP;
+	    this.ID = ID;
 	}
 	
 	public InetAddress getIP(){
@@ -53,11 +63,19 @@ public class ServerUser extends Thread{
 		this.sala = sala;
 	}
 	
+	public void setBufferCenter(BufferCenter buff){
+		this.buff = buff;
+	}
+	
 	public void run(){
 		
 		new UserAudioReceiver (ID,IP,port,sala).start();
 		
+		new Mixer(ID, IP, port, buff).start();
+		
 		new ServerCheckConection(server, this).start();
+		
+		
 //		try{
 //			DatagramSocket  s;
 //			DatagramPacket  p;

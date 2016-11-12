@@ -82,7 +82,7 @@ public class ServerCheckConection extends Thread {
 					}	
 				}
 				s.printT("\""+ user.nickname + "\" desconectou-se da sala " + user.sala.nome);
-				user.sala.getUsers().remove(user);
+				user.sala.removeUser(user);
 				s.printT("A sala: \"" + user.sala.nome + "\" agora tem " + user.sala.getUsers().size() + " membros");
 				
 				

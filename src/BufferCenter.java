@@ -1,29 +1,36 @@
 
 public class BufferCenter {
 	
-	static byte buffer[][] = new byte[5][512];
-	static boolean isEmptyFlags[] = new boolean[5];
-	static int cont[] = new int[5];
-	static int numUsers;
+	byte buffer[][] = new byte[5][512];
+	boolean isEmptyFlags[] = new boolean[5];
+	int cont[] = new int[5];
+	int numUsers;
 	
 	
-	public static synchronized void setNumUsers(int num){
+	public synchronized void setNumUsers(int num){
 		numUsers = num;
 	}
 	
-	public static synchronized byte[] getBuffer(int id){
+	public synchronized int getNumUsers(){
+		return numUsers;
+	}
+	
+	public synchronized byte[] getBuffer(int id){
 		byte[] temp = null; 
+		System.out.println("Getbuffer em " +id);
 		
-		if(cont[id] < numUsers && !isEmptyFlags[id]){ //Confere se todos já leram o buffer e se o buffer está cheio
+		if(cont[id] < (numUsers - 1) && !isEmptyFlags[id]){ //Confere se todos já leram o buffer e se o buffer está cheio
 			cont[id]++;
 			temp = buffer[id].clone();
+			System.out.println("Fudeu 1");
 			if(cont[id] == numUsers){
 				isEmptyFlags[id] = true;
 				cont[id] = 0;
+				System.out.println("Fudeu 2");
 			}
 		}
 		
-		return temp;
+		return temp; //Se o buffer esteja vazio, retorna null
 	}
 	
 	//public static synchronized byte[][]

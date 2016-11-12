@@ -8,6 +8,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.sound.sampled.AudioInputStream;
 
 public class UserAudioReceiver extends Thread{
@@ -22,6 +23,7 @@ public class UserAudioReceiver extends Thread{
     int numUsers;
     ServerRoom sala;
     int cont;
+    BufferCenter bufferCenter;
     
     public UserAudioReceiver (int id, InetAddress IP,int port, ServerRoom sala){
         this.id = id;
@@ -32,10 +34,12 @@ public class UserAudioReceiver extends Thread{
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        this.pIn = new DatagramPacket(BufferCenter.buffer[id],BufferCenter.buffer[0].length);
+        bufferCenter = sala.getBufferCenter();
+        this.pIn = new DatagramPacket(bufferCenter.buffer[id],bufferCenter.buffer[0].length);
         isEmpty = true;
         this.sala = sala;
         cont = 0;
+        
     }
     
     public synchronized void setUsersNumber(int num){
@@ -64,10 +68,11 @@ public class UserAudioReceiver extends Thread{
 
     public void run(){
         while(true){
-            if(BufferCenter.isEmptyFlags[id]){
+            if(bufferCenter.isEmptyFlags[id]){
                 try {
                 	sIn.receive(pIn); //encher o buffer
-                	BufferCenter.isEmptyFlags[id] = false;
+                	bufferCenter.isEmptyFlags[id] = false;
+                	System.out.println("---------->Leu no "+id);
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }

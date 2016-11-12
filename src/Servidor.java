@@ -20,6 +20,7 @@ public class Servidor extends Thread{
 	
 	public Servidor(IServidor a){
 		this.a = a;
+
 	}
 	public void run(){
 		try{
@@ -61,16 +62,16 @@ public class Servidor extends Thread{
 						}
 					}
 					if(x == null){
-						user = new ServerUser(a, Nick, s.getInetAddress(), port+1,1);
-						x = new ServerRoom(user, port, sala);
+						user = new ServerUser(a, Nick, s.getInetAddress(), port+1,0);
+						x = new ServerRoom(user, port, sala, new BufferCenter());
+						user.setBufferCenter(x.getBufferCenter());
 						salas.add(x);
 						dataOUT.writeUTF(Integer.toString(port+1));
 						port += 1000;
 						
-						
 					}else{
 						user = new ServerUser(a, Nick, s.getInetAddress(), x.getPorta() + (x.getNum()*3)+1
-                                                ,x.getNum()+1);
+                                                ,x.getNum(),x.getBufferCenter());
 						dataOUT.writeUTF(Integer.toString(x.getPorta() + (x.getNum()*3)+1));
 						x.insereUser(user);
 					}
