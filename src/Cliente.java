@@ -8,7 +8,7 @@ import javax.sound.sampled.*;
 import javax.swing.JOptionPane;
 
 public class Cliente extends Thread {
-	int TAM = 1024;
+	int TAM = 512;
 	String nick, IP, sala;    //meu ip "192.168.0.22";
 	ICliente IC;
 	
@@ -22,9 +22,7 @@ public class Cliente extends Thread {
 	
 	public void run(){
 		
-		try{
-			int TAM = 1024;
-			
+		try{		
 			
 			// protocolo
 			

@@ -29,20 +29,32 @@ public class BufferCenter {
 		return isEmptyFlags[id];
 	}
 	
-	public synchronized byte[] getBuffer(int id){
+	public synchronized void incCont(int id){
+		cont[id]++;
+	}
+	
+	public synchronized void setCont(int id, int value){
+		cont[id] = value;
+	}
+	
+	public synchronized int getCont(int id){
+		return cont[id];
+	}
+	
+	public byte[] getBuffer(int id){
 		byte[] temp = null; 
 		//System.out.println("Getbuffer em " +id+ " Flag "+isEmptyFlags[id] +" numUsers "+ numUsers);
 		
 		
-		if((cont[id] < numUsers) && (!isEmptyFlags[id])){ //Confere se todos já leram o buffer e se o buffer está cheio
-			cont[id]++;
+		if((getCont(id) < getNumUsers()) && (!getIsEmptyFlag(id))){ //Confere se todos já leram o buffer e se o buffer está cheio
+			incCont(id);
 			temp = buffer[id].clone();
 			//System.out.println("Fudeu 1");
 		}
 		
-		if(cont[id] == numUsers){
+		if(getCont(id) == getNumUsers()){
 			setIsEmptyFlag(id, true);
-			cont[id] = 0;
+			setCont(id,0);
 			//System.out.println("Fudeu 2");
 		}
 		

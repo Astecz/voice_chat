@@ -38,7 +38,6 @@ public class UserAudioReceiver extends Thread{
         this.pIn = new DatagramPacket(bufferCenter.buffer[id],bufferCenter.buffer[0].length);
         this.sala = sala;
         cont = 0;
-        
     }
     
     public synchronized void setUsersNumber(int num){
@@ -68,11 +67,10 @@ public class UserAudioReceiver extends Thread{
     public void run(){
     	try {
         while(true){
-            if(bufferCenter.getIsEmptyFlag(id)){
+            if(bufferCenter.getIsEmptyFlag(id) || sala.getNum() == 1){
                 	sIn.receive(pIn); //encher o buffer
                 	bufferCenter.setIsEmptyFlag(id,false);
                 	//System.out.println("---------->Leu no "+id);
-                
             }
         }
     	} catch (IOException ex) {

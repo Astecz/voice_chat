@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 
 public class ClienteSom extends Thread{
 	int porta;
-	int TAM = 1024;
+	int TAM = 512;
 	
 	public ClienteSom(int porta){
 		this.porta = porta;

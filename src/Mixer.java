@@ -5,6 +5,8 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class Mixer extends Thread{
@@ -30,7 +32,7 @@ public class Mixer extends Thread{
 			DatagramSocket sOut = new DatagramSocket();
 			DatagramPacket pOut;
 			while(true){
-	    		
+				
 	    		for(int i = 0; i < buffer.length; i++){ //Enche o buffer
 
 	    			if(i >= bufferCenter.getNumUsers()){
@@ -53,6 +55,8 @@ public class Mixer extends Thread{
 	    		
 	    		//System.out.println("----------------->Passou");
 	    		
+//	    		if(idUser == 0) bufferOut = buffer[1].clone();
+//	    		else if(idUser == 1) bufferOut = buffer[0].clone();
 	    		for(int i = 0; i < buffer[0].length; i++){
 	    			bufferOut[i] = (byte) (buffer[0][i] + buffer[1][i] + buffer[2][i] 
 	    									+ buffer[3][i] + buffer[4][i]);
