@@ -71,7 +71,7 @@ public class ServerUser extends Thread{
 		
 		new UserAudioReceiver (ID,IP,port,sala).start();
 		
-		new Mixer(ID, IP, port, buff).start();
+		new Mixer(sala, this,ID, IP, port, buff).start();
 		
 		new ServerCheckConection(server, this).start();
 		

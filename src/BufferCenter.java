@@ -1,7 +1,7 @@
 
 public class BufferCenter {
 	
-	byte buffer[][] = new byte[5][512];
+	byte buffer[][] = new byte[5][1500];
 	private boolean isEmptyFlags[] = new boolean[5];
 	int cont[] = new int[5];
 	int numUsers;
@@ -46,13 +46,13 @@ public class BufferCenter {
 		//System.out.println("Getbuffer em " +id+ " Flag "+isEmptyFlags[id] +" numUsers "+ numUsers);
 		
 		
-		if((getCont(id) < getNumUsers()) && (!getIsEmptyFlag(id))){ //Confere se todos já leram o buffer e se o buffer está cheio
+		if((getCont(id) < (getNumUsers()-1)) && (!getIsEmptyFlag(id))){ //Confere se todos já leram o buffer e se o buffer está cheio
 			incCont(id);
 			temp = buffer[id].clone();
 			//System.out.println("Fudeu 1");
 		}
 		
-		if(getCont(id) == getNumUsers()){
+		if(getCont(id) == (getNumUsers()-1)){
 			setIsEmptyFlag(id, true);
 			setCont(id,0);
 			//System.out.println("Fudeu 2");

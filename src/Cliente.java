@@ -8,7 +8,7 @@ import javax.sound.sampled.*;
 import javax.swing.JOptionPane;
 
 public class Cliente extends Thread {
-	int TAM = 512;
+	int TAM = 1500;
 	String nick, IP, sala;    //meu ip "192.168.0.22";
 	ICliente IC;
 	
