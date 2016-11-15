@@ -67,11 +67,15 @@ public class ServerUser extends Thread{
 		this.buff = buff;
 	}
 	
+	public int getID(){
+		return ID;
+	}
+	
 	public void run(){
 		
 		new UserAudioReceiver (ID,IP,port,sala).start();
 		
-		new Mixer(sala, this,ID, IP, port, buff).start();
+		new Mixer(sala, this, IP, port, buff).start();
 		
 		new ServerCheckConection(server, this).start();
 		

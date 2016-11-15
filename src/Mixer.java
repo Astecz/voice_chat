@@ -45,7 +45,7 @@ public class Mixer extends Thread{
     }
     
     public void run(){
-    	long time;    	
+    	//long time;    	
     	try {
 			DatagramSocket sOut = new DatagramSocket();
 			DatagramPacket pOut;
@@ -53,27 +53,25 @@ public class Mixer extends Thread{
 			
 			while(true){
 				Iterator<ServerUser> it = sala.getUsers().iterator();
-				int j = 0;
-				boolean ok = true;
+				boolean pass = true; //variável para o controle do iterator
 				ServerUser u = null;
-				time = System.currentTimeMillis();
+				//time = System.currentTimeMillis();
+				
 				while(it.hasNext()){
-					if(ok) u = it.next();
+					if(pass) u = it.next(); //vai para o próximo elemento se for true
 					
 					if(u != user){
-						byte[] temp = bufferCenter.getBuffer(j);
+						byte[] temp = bufferCenter.getBuffer(u.getID());
 						if(temp == null){
-							ok = false;
+							pass = false; //caso não consiga acessar o buffer, não vai para o próximo obj
 							continue;
 						}
-						buffer[j] = temp.clone();
+						buffer[u.getID()] = temp.clone();
 						//System.out.println("Tempo interator Mixer "+idUser+": "+(System.currentTimeMillis() - time));
 					}
-					
-					j++;
-					ok = true;
-					
+					pass = true;
 				}
+				
 				//System.out.println(idUser+"      "+j);
 				//System.out.println("Tempo interator Mixer "+idUser+": "+(System.currentTimeMillis() - time));
 				
@@ -118,7 +116,8 @@ public class Mixer extends Thread{
 	    		
 //	    		if(idUser == 0) bufferOut = buffer[1].clone();
 //	    		else if(idUser == 1) bufferOut = buffer[0].clone();
-	    		for(int i = 0; i < buffer[0].length; i++){
+				
+	    		for(int i = 0; i < buffer[0].length; i++){ 
 	    			bufferOut[i] = (byte) (buffer[0][i] + buffer[1][i] + buffer[2][i] 
 	    									+ buffer[3][i] + buffer[4][i]);
 	    		}
@@ -132,13 +131,6 @@ public class Mixer extends Thread{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-        
-    	
-    		
-    		
-    		
-    		
-    		
     		
     		
     	
