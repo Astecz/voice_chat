@@ -22,17 +22,18 @@ public class ServerUser extends Thread{
 	IServidor server;
     int ID;
     BufferCenter buff;
+    boolean isReady;
 		
 	// comunicação
 	byte []buffer = new byte[TAM];
 
-	public ServerUser(IServidor s,String nickname, InetAddress IP, int port){
-		this.server = s;
-		this.nickname = nickname;
-		this.port = port;
-		this.IP = IP;
-		
-	}
+//	public ServerUser(IServidor s,String nickname, InetAddress IP, int port){
+//		this.server = s;
+//		this.nickname = nickname;
+//		this.port = port;
+//		this.IP = IP;
+//		
+//	}
         
     public ServerUser(IServidor s,String nickname, InetAddress IP, int port, int ID, BufferCenter buff){
 		this.server = s;
@@ -41,6 +42,7 @@ public class ServerUser extends Thread{
 		this.IP = IP;
 	    this.ID = ID;
 	    this.buff = buff;
+	    this.isReady = false;
 	}
     
     public ServerUser(IServidor s,String nickname, InetAddress IP, int port, int ID){
@@ -50,6 +52,14 @@ public class ServerUser extends Thread{
 		this.IP = IP;
 	    this.ID = ID;
 	}
+    
+    public synchronized void setIsReady(boolean value){
+    	isReady = value;
+    }
+    
+    public synchronized boolean isReady(){
+    	return isReady;
+    }
 	
 	public InetAddress getIP(){
 		return IP;
@@ -73,7 +83,7 @@ public class ServerUser extends Thread{
 	
 	public void run(){
 		
-		new UserAudioReceiver (ID,IP,port,sala).start();
+		new UserAudioReceiver (ID,IP,port,sala,this).start();
 		
 		new Mixer(sala, this, IP, port, buff).start();
 		

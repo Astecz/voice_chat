@@ -59,12 +59,16 @@ public class Cliente extends Thread {
 			
 			pacote = new DatagramPacket(bufferOUT, bufferOUT.length, ip, porta); // cria o pacote
 			socket = new DatagramSocket(); // cria a conexão
-		
+			//long time;
 			while(true){
+				//time = System.currentTimeMillis();
+				
 				microphone.read(bufferOUT, 0, bufferOUT.length);
 				
 				if(pacote.getLength() >= TAM)
 					socket.send(pacote);
+				
+				//System.out.println((System.currentTimeMillis() - time));
 			}
 		}catch(UnknownHostException e){
 			JOptionPane.showMessageDialog(null, "Impossível conectar ao servidor! - Cliente");

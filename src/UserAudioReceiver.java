@@ -23,9 +23,12 @@ public class UserAudioReceiver extends Thread{
     ServerRoom sala;
     int cont;
     BufferCenter bufferCenter;
+    ServerUser user;
+
     
-    public UserAudioReceiver (int id, InetAddress IP,int port, ServerRoom sala){
-        this.id = id;
+    public UserAudioReceiver (int id, InetAddress IP,int port, ServerRoom sala, ServerUser user){
+    	this.user = user;
+    	this.id = id;
         this.IP = IP;
         this.port = port;
         try {
@@ -43,6 +46,8 @@ public class UserAudioReceiver extends Thread{
     public synchronized void setUsersNumber(int num){
         numUsers = num;
     } 
+    
+
     
 //    private synchronized void read() throws IOException{
 //        sIn.receive(pIn); //encher o buffer
@@ -71,6 +76,10 @@ public class UserAudioReceiver extends Thread{
                 	sIn.receive(pIn); //encher o buffer
                 	bufferCenter.setIsEmptyFlag(id,false);
                 	//System.out.println("---------->Leu no "+id);
+//                	if(cont == 0){
+//                		cont++;
+//                		bufferCenter.setUserReady(id,true);
+//                	}
             }
         }
     	} catch (IOException ex) {

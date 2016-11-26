@@ -36,12 +36,20 @@ public class ClienteSom extends Thread{
 			
 			//fim 
 			
+			//long time;
 					
 			while(true){
+				//time = System.currentTimeMillis();
 				DatagramPacket pacote = new DatagramPacket(buffer, buffer.length); // criei o pacote que vai ficar recebendo o bagúi
 				soc.receive(pacote); // recebe o pacote no buffer
+				
+				//if(buffer[100]==0) continue; 
+				
 				inSpeaker.write(buffer, 0, buffer.length);
-					
+				
+				//if(porta < 8100) System.out.println(buffer[100]);
+				
+				//if(porta < 8100) System.out.println((System.currentTimeMillis() - time));
 			}
 		}catch(SocketException e){
 			JOptionPane.showMessageDialog(null, "Problemas na criação do servidor! - ClienteSom");
