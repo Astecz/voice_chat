@@ -13,7 +13,7 @@ public class IServidor extends JFrame implements ActionListener{
 	boolean fase = true;
 	JButton botao = new JButton("Conectar");
 	JButton botao2 = new JButton("Clear");
-	JTextArea texto = new JTextArea("Voice Chat UDP\n\n\nAutores:\n\tAbraão Aires\n\tAellison Cassimiro\n\tJosé Alves\n\tLucas Aversari");
+	JTextArea texto = new JTextArea("Voice Chat UDP\n\n\tSistemas Mutim�dia");
 	Servidor server;
 	
 	public IServidor(){

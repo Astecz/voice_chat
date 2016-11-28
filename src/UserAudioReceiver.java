@@ -12,7 +12,6 @@ import java.util.logging.Logger;
 import javax.sound.sampled.AudioInputStream;
 
 public class UserAudioReceiver extends Thread{
-   // byte buffer[] = new byte[512];
 
     int id;
     InetAddress IP;
@@ -48,40 +47,15 @@ public class UserAudioReceiver extends Thread{
     } 
     
 
-    
-//    private synchronized void read() throws IOException{
-//        sIn.receive(pIn); //encher o buffer
-//    }
-    
-//    public synchronized byte[] getBuffer(){
-//        cont++;
-//        setEmpty();
-//        return buffer;
-//    }
-//    
-//    public synchronized void setEmpty(){
-//        if(cont == sala.getNum()){
-//            isEmpty = true;
-//            cont = 0;
-//        }else{
-//            isEmpty = false;
-//        }
-//        
-//    }
 
     public void run(){
     	try {
-        while(true){
-            if(bufferCenter.getIsEmptyFlag(id) || sala.getNum() == 1){
-                	sIn.receive(pIn); //encher o buffer
-                	bufferCenter.setIsEmptyFlag(id,false);
-                	//System.out.println("---------->Leu no "+id);
-//                	if(cont == 0){
-//                		cont++;
-//                		bufferCenter.setUserReady(id,true);
-//                	}
-            }
-        }
+		    while(true){
+		        if(bufferCenter.getIsEmptyFlag(id) || sala.getNum() == 1){
+		            	sIn.receive(pIn); //encher o buffer
+		            	bufferCenter.setIsEmptyFlag(id,false);
+		        }
+		    }
     	} catch (IOException ex) {
             ex.printStackTrace();
         }

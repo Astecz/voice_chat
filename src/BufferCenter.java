@@ -5,32 +5,14 @@ public class BufferCenter {
 	private boolean isEmptyFlags[] = new boolean[5];
 	int cont[] = new int[5];
 	int numUsers;
-	boolean userReady[] = new boolean[5];
-	
-	boolean user1 = false;
 	
 	public BufferCenter(){
-		user1 = false;
+
 		for(int i = 0; i < isEmptyFlags.length; i++){
 			isEmptyFlags[i] = false;
-			userReady[i] = false;
 		}
 		
-		
-		
 	}
-	//////////////////////////////
-	
-	public synchronized void setUser1(boolean value){
-		user1 = value;
-	}
-	
-	public synchronized boolean getUser1(){
-		return user1;
-	}
-	
-	////////////////////
-	
 	
 	public synchronized void setNumUsers(int num){
 		numUsers = num;
@@ -48,18 +30,6 @@ public class BufferCenter {
 	public synchronized boolean getIsEmptyFlag(int id){
 		return isEmptyFlags[id];
 	}
-	
-	
-	///////////////////
-	public synchronized void setUserReady(int id, boolean value){
-		userReady[id] = value;
-		//System.out.println("FLAG DE :"+id+" "+getIsEmptyFlag(id));
-	}
-	
-	public synchronized boolean getUserReady(int id){
-		return userReady[id];
-	}
-	//////////////////////
 	
 	
 	public synchronized void incCont(int id){
@@ -93,12 +63,5 @@ public class BufferCenter {
 		
 		return temp; //Se o buffer esteja vazio, retorna null
 	}
-	
-	//public static synchronized byte[][]
-	
-//	public static synchronized void writeBuffer(byte[] b, int id){
-//		buffer[id] = b.clone();
-//	}
-	
 
 }
